@@ -1,6 +1,7 @@
 import BookPreview from "../../components/bookPreview";
 import { useState, useRef, useEffect } from 'react'
 import styles from './style.module.css'
+import 'whatwg-fetch'
 
 export default function Search() {
   // stores search results
@@ -16,6 +17,8 @@ export default function Search() {
   // https://www.googleapis.com/books/v1/volumes?langRestrict=en&maxResults=16&q=YOUR_QUERY
   // Use a query of "React"
   useEffect(() => {
+    if (!query.trim()) return;
+    
     const fetchBookSearchResults = async () => {
       setFetching(true);
     try {
@@ -32,8 +35,9 @@ export default function Search() {
         setFetching(false);
       }
     };
-
-    fetchBookSearchResults();
+    if (!fetching) {
+      fetchBookSearchResults();
+    }
   }, [query]);
 
   
