@@ -18,8 +18,8 @@ export default function Search() {
   // Use a query of "React"
   useEffect(() => {
     if (!query.trim()) return;
-    
-    const fetchBookSearchResults = async () => {
+
+    async function fetchBookSearchResults(){
       setFetching(true);
     try {
         const res = await fetch(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&maxResults=16&q=React`);
@@ -35,7 +35,7 @@ export default function Search() {
         setFetching(false);
       }
     };
-    if (!fetching) {
+    if (!fetching && query === "React") {
       fetchBookSearchResults();
     }
   }, [query]);
@@ -51,7 +51,7 @@ export default function Search() {
   const inputRef = useRef()
   const inputDivRef = useRef()
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (fetching || query.trim() === "") return;
     setFetching(true);
